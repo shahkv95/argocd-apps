@@ -16,20 +16,20 @@ spec:
     helm:
       values: |
         architecture: replicaset
-      auth:
-        enabled: false
-      persistence:
-        storageClass: local-path
-        size: 1Gi
-      resources:
-        limits:
-          cpu: 500m
-          memory: 512Mi
-        requests:
-          cpu: 200m
-          memory: 256Mi
-      arbiter:
-        enabled: false
+        auth:
+          enabled: false
+        persistence:
+          storageClass: local-path
+          size: 1Gi
+        resources:
+          limits:
+            cpu: 500m
+            memory: 512Mi
+          requests:
+            cpu: 200m
+            memory: 256Mi
+        arbiter:
+          enabled: false
   project: default
   syncPolicy:
     automated:
