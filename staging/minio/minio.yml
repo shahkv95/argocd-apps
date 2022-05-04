@@ -1,0 +1,30 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: minio
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  destination:
+    namespace: minio
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    chart: minio
+    repoURL: https://charts.bitnami.com/bitnami
+    targetRevision: 9.2.9
+    helm:
+      values: |
+        mode: "standalone"
+        auth:
+          enabled: false
+        persistence:
+          size: 1Gi
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
