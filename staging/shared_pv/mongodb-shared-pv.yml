@@ -16,18 +16,11 @@ spec:
     chart: mongodb
     helm:
       values: |
-        architecture: replicaset
+        architecture: standalone
         auth:
           enabled: false
         persistence:
           existingClaim: shared-pvc
-        resources:
-          limits:
-            cpu: 500m
-            memory: 512Mi
-          requests:
-            cpu: 200m
-            memory: 256Mi
         arbiter:
           enabled: false
   project: default
