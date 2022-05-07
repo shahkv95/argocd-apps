@@ -1,0 +1,39 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mongodb-shared-pv
+  namespace: argocd
+spec:
+  destination:
+    name: ''
+    namespace: shared-pv
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: ''
+    repoURL: 'https://charts.bitnami.com/bitnami'
+    targetRevision: 10.30.11
+    chart: mongodb
+    helm:
+      values: |
+        architecture: replicaset
+        auth:
+          enabled: false
+        persistence:
+          existingClaim: shared-pvc
+        resources:
+          limits:
+            cpu: 500m
+            memory: 512Mi
+          requests:
+            cpu: 200m
+            memory: 256Mi
+        arbiter:
+          enabled: false
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
