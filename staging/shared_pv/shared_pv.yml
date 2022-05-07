@@ -6,7 +6,7 @@ metadata:
   namespace: shared-pv
 spec:
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
   storageClassName: local-path
   resources:
     requests:
