@@ -1,0 +1,23 @@
+name: Yaml lint verification
+on: [push]
+jobs:
+  yaml-lint-errors:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.BUILD_PAT_GITHUB_ACTION }}
+      - name: yaml-lint
+        id: yaml-lint
+        uses: ibiqlik/action-yamllint@v3
+        with:
+          file_or_dir: staging/**/*.yml
+          config_data: "{extends: default, rules: {new-line-at-end-of-file: disable, line-length: {max: 1000}, trailing-spaces: disable}}"
+
+      - run: echo ${{ steps.yaml-lint.outputs.logfile }}
+
+      - uses: actions/upload-artifact@v2
+        if: always()
+        with:
+          name: yamllint-logfile
+          path: ${{ steps.yaml-lint.outputs.logfile }}
