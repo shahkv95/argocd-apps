@@ -1,5 +1,17 @@
 name: Yaml lint verification
-on: [push]
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      should_release:
+        description: "Release branch (always true for main)"
+        required: false
+        default: "false"
 jobs:
   yaml-lint-errors:
     runs-on: ubuntu-latest
